@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Appointment, AppointmentsDayView } from '../src/Appointment';
-
+import ReactTestUtils from 'react-dom/test-utils';
 describe('Appointment', () => {
 	let customer;
 	let container;
@@ -72,5 +72,16 @@ describe('AppointmentsDayView', () => {
 
 	it('selects the firs appointment by default', () => {
 		expect(container.textContent).toMatch('Ashley');
+	});
+
+	it('has a button element in each li', () => {
+		expect(container.querySelectorAll('li > button')).toHaveLength(2);
+		expect(container.querySelectorAll('li > button')[0].type).toEqual('button');
+	});
+
+	it('renders another appointment when selected', () => {
+		const button = container.querySelectorAll('button')[1];
+		ReactTestUtils.Simulate.click(button);
+		expect(container.textContent).toMatch('Jordan');
 	});
 });
